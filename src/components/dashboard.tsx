@@ -13,7 +13,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { exportToCSV, exportToJSON } from "@/lib/export";
+import { exportToCSV, exportToJSON, exportToPDF, exportToTXT } from "@/lib/export";
 
 interface DashboardProps {
     result: AnalysisResult;
@@ -28,6 +28,14 @@ export function Dashboard({ result, onReset }: DashboardProps) {
     const handleExportJSON = () => {
         exportToJSON(result, result.fileName);
     };
+
+    const handleExportPDF = () => {
+        exportToPDF(result, result.fileName);
+    };
+
+    const handleExportTXT = () => {
+        exportToTXT(result, result.fileName);
+    }
     
     return (
         <div className="space-y-6">
@@ -55,11 +63,17 @@ export function Dashboard({ result, onReset }: DashboardProps) {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
+                            <DropdownMenuItem onClick={handleExportPDF}>
+                                Export as PDF
+                            </DropdownMenuItem>
                             <DropdownMenuItem onClick={handleExportCSV}>
                                 Export as CSV
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={handleExportJSON}>
                                 Export as JSON
+                            </DropdownMenuItem>
+                             <DropdownMenuItem onClick={handleExportTXT}>
+                                Export as TXT
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>

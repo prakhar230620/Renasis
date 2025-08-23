@@ -30,6 +30,7 @@ export function FileUploader({ onFileUpload, isProcessing }: FileUploaderProps) 
       'application/msword': ['.doc'],
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
       'text/plain': ['.txt'],
+      'application/json': ['.json'],
     },
     multiple: false,
     disabled: isProcessing,
@@ -58,7 +59,7 @@ export function FileUploader({ onFileUpload, isProcessing }: FileUploaderProps) 
                   {isDragActive ? 'Drop the file here...' : 'Drag & drop a file or click below'}
                 </p>
                 <p className="mt-2 text-muted-foreground">
-                  Supported formats: Excel, CSV, PDF, Word, TXT
+                  Supported formats: Excel, CSV, PDF, Word, TXT, JSON
                 </p>
                 <Button onClick={open} disabled={isProcessing} className="mt-6">
                   Select File
