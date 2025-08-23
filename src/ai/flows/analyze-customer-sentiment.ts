@@ -40,7 +40,7 @@ const prompt = ai.definePrompt({
   name: 'analyzeCustomerSentimentPrompt',
   input: {schema: AnalyzeCustomerSentimentInputSchema},
   output: {schema: AnalyzeCustomerSentimentOutputSchema},
-  prompt: `Analyze the sentiment of the following customer reviews. For each review, return the original text, its sentiment ("positive", "negative", or "neutral"), and a confidence score from 0 to 1.
+  prompt: `Analyze the sentiment of the following customer reviews. For each review, return the original text, its sentiment ("positive", "negative", or "neutral"), and a confidence score from 0 to 1. If a review is empty or nonsensical, you can still include it in the results, but assign a 'neutral' sentiment and a low confidence score.
 
 Reviews:
 {{#each reviews}}

@@ -11,13 +11,29 @@ import { Dashboard, DashboardSkeleton } from '@/components/dashboard';
 
 // Helper to parse text and create mock reviews
 const parseReviewsFromText = (text: string): Omit<Review, 'sentiment' | 'confidence'>[] => {
-  return text.split('\n').filter(line => line.trim().length > 0).map((line, index) => ({
-    id: index + 1,
-    product: 'Uploaded File',
-    user: `User ${index + 1}`,
-    date: new Date().toISOString().split('T')[0],
-    text: line,
-  }));
+  const dateRegex = /^\[(\d{4}-\d{2}-\d{2})\]\s*/;
+  return text.split('\n').filter(line => line.trim().length > 0).map((line, index) => {
+    const match = line.match(dateRegex);
+    if (match) {
+      const extractedDate = match[1];
+      const reviewText = line.substring(match[0].length);
+      return {
+        id: index + 1,
+        product: 'Uploaded File',
+        user: `User ${index + 1}`,
+        date: extractedDate,
+        text: reviewText,
+      };
+    }
+    // Fallback for lines without a date
+    return {
+      id: index + 1,
+      product: 'Uploaded File',
+      user: `User ${index + 1}`,
+      date: new Date().toISOString().split('T')[0],
+      text: line,
+    };
+  });
 };
 
 export default function Home() {
