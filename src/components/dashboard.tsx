@@ -46,13 +46,13 @@ export function Dashboard({ result, onReset }: DashboardProps) {
     return (
         <div className="space-y-8 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0">
             <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-                <div className="flex items-center gap-4">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-card shadow-inner-shadow">
+                <div className="flex items-center gap-4 min-w-0">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-card shadow-inner-shadow flex-shrink-0">
                         <FileText className="h-7 w-7 text-primary" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                         <p className="text-sm text-muted-foreground">Analysis Report</p>
-                        <h2 className="text-2xl font-bold tracking-tight">{result.fileName}</h2>
+                        <h2 className="text-2xl font-bold tracking-tight truncate" title={result.fileName}>{result.fileName}</h2>
                     </div>
                 </div>
                 <div className="flex w-full shrink-0 gap-2 sm:w-auto">
@@ -86,7 +86,7 @@ export function Dashboard({ result, onReset }: DashboardProps) {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                 <Card className="shadow-lg hover:shadow-primary/20 transition-shadow h-full">
                     <CardHeader>
                         <CardTitle>Sentiment Analysis</CardTitle>
@@ -151,7 +151,7 @@ export const DashboardSkeleton = () => (
             </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <Card>
                 <CardHeader>
                     <Skeleton className="h-6 w-40" />
