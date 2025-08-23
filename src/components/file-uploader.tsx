@@ -6,17 +6,43 @@ import { useDropzone, type FileWithPath } from 'react-dropzone';
 import { Button } from './ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { useToast } from '@/hooks/use-toast';
+import { Packer, Document } from 'docx';
+import { read, utils } from 'xlsx';
 
-interface FileUploaderProps {
-  onFileText: (fileName: string, fileText: string) => void;
-  isProcessing: boolean;
+
+async function readDocx(file: File): Promise<string> {
+  const arrayBuffer = await file.arrayBuffer();
+  try {
+    const doc = new Document();
+    const content = await doc.body.getSections()[0].getText();
+    return content;
+  } catch (e) {
+    console.error("Error reading docx file", e);
+    return "";
+  }
 }
+
 
 export function FileUploader({ onFileText, isProcessing }: FileUploaderProps) {
   const { toast } = useToast();
 
-  const handleFile = (file: File) => {
+  const handleFile = async (file: File) => {
     const reader = new FileReader();
+    
+    if (file.name.endsWith('.docx')) {
+      try {
+        const text = await readDocx(file);
+        onFileText(file.name, text);
+      } catch (error) {
+        toast({
+          title: 'File Read Error',
+          description: 'Could not parse the DOCX file.',
+          variant: 'destructive',
+        });
+      }
+      return;
+    }
+
     reader.onload = async (e) => {
       const text = e.target?.result;
       if (typeof text === 'string') {
@@ -52,6 +78,7 @@ export function FileUploader({ onFileText, isProcessing }: FileUploaderProps) {
       'text/csv': ['.csv'],
       'text/plain': ['.txt'],
       'application/json': ['.json'],
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
     },
     multiple: false,
     disabled: isProcessing,
@@ -85,10 +112,10 @@ export function FileUploader({ onFileText, isProcessing }: FileUploaderProps) {
                       {isDragActive ? 'Drop the file here...' : 'Drag & drop a file or click to select'}
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      Supported formats: TXT, CSV, JSON
+                      Supported formats: TXT, CSV, JSON, DOCX
                     </p>
                 </div>
-                <Button onClick={open} disabled={isProcessing} size="lg" className="mt-6 sr-only">
+                <Button onClick={open} disabled={isProcessing} size="lg" className="mt-6" type="button">
                     {isProcessing ? (
                         <>
                             <Loader2 className="mr-2 animate-spin" />
