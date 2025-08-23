@@ -16,7 +16,7 @@ export default function PrivacyPage() {
     const sections = [
         {
             title: "1. Introduction",
-            content: "Welcome to Review Insights AI. We are committed to protecting your privacy. This Privacy Policy explains how we handle your information when you use our Service. As our service is open-access and does not require user accounts, we collect minimal information."
+            content: "Welcome to RENASIS. We are committed to protecting your privacy. This Privacy Policy explains how we handle your information when you use our Service. As our service is open-access and does not require user accounts, we collect minimal information."
         },
         {
             title: "2. Information We Do Not Collect",

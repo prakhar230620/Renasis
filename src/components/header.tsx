@@ -40,7 +40,7 @@ export function AppHeader() {
         <Link href="/" className="flex items-center gap-3">
           <Logo />
           <h1 className="text-2xl font-bold tracking-tight">
-            Review Insights AI
+            RENASIS
           </h1>
         </Link>
       </div>

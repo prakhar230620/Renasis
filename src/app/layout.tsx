@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { AppFooter } from '@/components/footer';
 
 export const metadata: Metadata = {
-  title: 'Review Insights AI',
+  title: 'RENASIS',
   description: 'Analyze customer reviews with advanced AI-driven insights.',
   manifest: '/manifest.json',
 };
@@ -22,10 +22,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-        <meta name="application-name" content="Review Insights AI" />
+        <meta name="application-name" content="RENASIS" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Review Insights AI" />
+        <meta name="apple-mobile-web-app-title" content="RENASIS" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="theme-color" content="#1E88E5" />
