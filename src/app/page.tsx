@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import type { AnalysisResult, Review, SentimentData, SuggestionCategory } from '@/types';
 import { analyzeCustomerSentiment } from '@/ai/flows/analyze-customer-sentiment';
@@ -24,6 +24,21 @@ export default function Home() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const { toast } = useToast();
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (analysisResult) {
+        e.preventDefault();
+        e.returnValue = 'You have an ongoing analysis. Are you sure you want to leave? Your results will be lost.';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [analysisResult]);
+
 
   const handleFileText = async (fileName: string, fileText: string) => {
     setIsProcessing(true);
