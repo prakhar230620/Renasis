@@ -1,0 +1,16 @@
+{
+  "name": "RENASIS",
+  "short_name": "RENASIS",
+  "description": "Analyze customer reviews with advanced AI-driven insights.",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F0F2F5",
+  "theme_color": "#29ABE2"
+}
