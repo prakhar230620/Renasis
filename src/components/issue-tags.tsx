@@ -1,4 +1,5 @@
-import { AlertTriangle, Badge } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
+import { ScrollArea } from "./ui/scroll-area";
 
 interface IssueTagsProps {
     issues: string[];
@@ -13,15 +14,17 @@ export function IssueTags({ issues }: IssueTagsProps) {
         );
     }
     return (
-         <div className="mt-4">
-            <ul className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
-                {issues.map((issue, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                        <AlertTriangle className="h-5 w-5 flex-shrink-0 text-yellow-500 mt-0.5" />
-                        <span className="text-muted-foreground">{issue}</span>
-                    </li>
-                ))}
-            </ul>
-        </div>
+        <ScrollArea className="h-[250px] w-full">
+            <div className="mt-4 pr-4">
+                <ul className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
+                    {issues.map((issue, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                            <AlertTriangle className="h-5 w-5 flex-shrink-0 text-yellow-500 mt-0.5" />
+                            <span className="text-muted-foreground">{issue}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </ScrollArea>
     );
 }
