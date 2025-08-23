@@ -31,19 +31,22 @@ export default function Home() {
 
     try {
       const reviewsToProcess = parseReviewsFromText(fileText);
-      const allReviewText = reviewsToProcess.map(r => r.text).join('\\n');
+      const allReviewText = reviewsToProcess.map(r => r.text);
 
-      const sentimentPromises = reviewsToProcess.map(review => 
-        analyzeCustomerSentiment({ reviewText: review.text })
-          .then(result => ({ ...review, sentiment: result.sentiment, confidence: result.confidence }))
-          .catch(() => ({ ...review, sentiment: 'neutral', confidence: 0.5 }))
-      );
-
-      const [issuesResult, suggestionsResult, reviewsWithSentiment] = await Promise.all([
-        identifyCustomerIssues({ reviews: allReviewText }),
-        generateBusinessSuggestions({ reviewAnalysis: allReviewText }),
-        Promise.all(sentimentPromises),
+      const [issuesResult, suggestionsResult, sentimentResult] = await Promise.all([
+        identifyCustomerIssues({ reviews: allReviewText.join('\\n') }),
+        generateBusinessSuggestions({ reviewAnalysis: allReviewText.join('\\n') }),
+        analyzeCustomerSentiment({ reviews: allReviewText }),
       ]);
+
+      const reviewsWithSentiment = reviewsToProcess.map(review => {
+        const sentimentInfo = sentimentResult.results.find(r => r.reviewText === review.text);
+        return {
+          ...review,
+          sentiment: sentimentInfo?.sentiment || 'neutral',
+          confidence: sentimentInfo?.confidence || 0.5,
+        };
+      });
       
       const sentimentCounts = reviewsWithSentiment.reduce((acc, review) => {
         const sentimentKey = review.sentiment || 'neutral';
