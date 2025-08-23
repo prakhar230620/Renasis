@@ -1,5 +1,4 @@
-import { Badge } from "./ui/badge";
-import { Tag } from "lucide-react";
+import { AlertTriangle, Badge } from "lucide-react";
 
 interface IssueTagsProps {
     issues: string[];
@@ -14,13 +13,15 @@ export function IssueTags({ issues }: IssueTagsProps) {
         );
     }
     return (
-        <div className="flex flex-wrap gap-3 pt-2">
-            {issues.map((issue, index) => (
-                <Badge key={index} variant="secondary" className="px-3 py-1.5 text-sm font-medium transition-all hover:bg-primary/20 hover:text-primary-foreground border-primary/10">
-                   <Tag className="mr-2 h-4 w-4 text-primary"/>
-                    {issue}
-                </Badge>
-            ))}
+         <div className="mt-4">
+            <ul className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
+                {issues.map((issue, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                        <AlertTriangle className="h-5 w-5 flex-shrink-0 text-yellow-500 mt-0.5" />
+                        <span className="text-muted-foreground">{issue}</span>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }
