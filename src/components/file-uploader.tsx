@@ -47,7 +47,6 @@ export function FileUploader({ onFileText, isProcessing }: FileUploaderProps) {
 
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop,
-    noClick: true,
     noKeyboard: true,
     accept: {
       'text/csv': ['.csv'],
@@ -83,13 +82,13 @@ export function FileUploader({ onFileText, isProcessing }: FileUploaderProps) {
                 </div>
                 <div className="text-center">
                     <p className="text-lg font-semibold">
-                      {isDragActive ? 'Drop the file here...' : 'Drag & drop a file or click below'}
+                      {isDragActive ? 'Drop the file here...' : 'Drag & drop a file or click to select'}
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">
                       Supported formats: TXT, CSV, JSON
                     </p>
                 </div>
-                <Button onClick={open} disabled={isProcessing} size="lg" className="mt-6">
+                <Button onClick={open} disabled={isProcessing} size="lg" className="mt-6 sr-only">
                     {isProcessing ? (
                         <>
                             <Loader2 className="mr-2 animate-spin" />
