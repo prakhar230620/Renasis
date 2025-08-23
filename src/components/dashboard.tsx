@@ -41,7 +41,7 @@ export function Dashboard({ result, onReset }: DashboardProps) {
         <div className="space-y-8 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0">
             <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                 <div className="flex items-center gap-4">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-primary/10">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-card">
                         <FileText className="h-7 w-7 text-primary" />
                     </div>
                     <div>
@@ -62,7 +62,7 @@ export function Dashboard({ result, onReset }: DashboardProps) {
                                 <ChevronDown className="ml-2 h-4 w-4" />
                             </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
+                        <DropdownMenuContent align="end" className="bg-background border-border">
                             <DropdownMenuItem onClick={handleExportPDF}>
                                 Export as PDF
                             </DropdownMenuItem>
@@ -81,7 +81,7 @@ export function Dashboard({ result, onReset }: DashboardProps) {
             </div>
 
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                <Card className="lg:col-span-1 shadow-sm hover:shadow-md transition-shadow">
+                <Card className="lg:col-span-1 shadow-lg hover:shadow-primary/20 transition-shadow">
                     <CardHeader>
                         <CardTitle>Sentiment Analysis</CardTitle>
                         <CardDescription>Distribution of customer sentiment.</CardDescription>
@@ -90,7 +90,7 @@ export function Dashboard({ result, onReset }: DashboardProps) {
                         <SentimentChart data={result.sentimentDistribution} />
                     </CardContent>
                 </Card>
-                <Card className="lg:col-span-2 shadow-sm hover:shadow-md transition-shadow">
+                <Card className="lg:col-span-2 shadow-lg hover:shadow-primary/20 transition-shadow">
                     <CardHeader>
                         <CardTitle>Key Issues Identified</CardTitle>
                         <CardDescription>Common topics mentioned in reviews.</CardDescription>
@@ -103,7 +103,7 @@ export function Dashboard({ result, onReset }: DashboardProps) {
 
             <AiSuggestions suggestions={result.suggestions} />
 
-            <Card className="shadow-sm hover:shadow-md transition-shadow">
+            <Card className="shadow-lg hover:shadow-primary/20 transition-shadow">
                 <CardHeader>
                     <CardTitle>Processed Reviews</CardTitle>
                     <CardDescription>A detailed view of each analyzed review.</CardDescription>

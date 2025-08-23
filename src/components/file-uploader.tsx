@@ -5,30 +5,52 @@ import React, { useCallback } from 'react';
 import { useDropzone, type FileWithPath } from 'react-dropzone';
 import { Button } from './ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
+import { useToast } from '@/hooks/use-toast';
 
 interface FileUploaderProps {
-  onFileUpload: (file: File) => void;
+  onFileText: (fileName: string, fileText: string) => void;
   isProcessing: boolean;
 }
 
-export function FileUploader({ onFileUpload, isProcessing }: FileUploaderProps) {
+export function FileUploader({ onFileText, isProcessing }: FileUploaderProps) {
+  const { toast } = useToast();
+
+  const handleFile = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const text = e.target?.result;
+      if (typeof text === 'string') {
+        onFileText(file.name, text);
+      } else {
+         toast({
+          title: 'File Read Error',
+          description: 'Could not read the file content as text.',
+          variant: 'destructive',
+        });
+      }
+    };
+    reader.onerror = () => {
+      toast({
+        title: 'File Read Error',
+        description: 'An error occurred while reading the file.',
+        variant: 'destructive',
+      });
+    };
+    reader.readAsText(file);
+  }
+
   const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
     if (acceptedFiles.length > 0) {
-      onFileUpload(acceptedFiles[0]);
+      handleFile(acceptedFiles[0]);
     }
-  }, [onFileUpload]);
+  }, [onFileText]);
 
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop,
     noClick: true,
     noKeyboard: true,
     accept: {
-      'application/vnd.ms-excel': ['.xls'],
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
       'text/csv': ['.csv'],
-      'application/pdf': ['.pdf'],
-      'application/msword': ['.doc'],
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
       'text/plain': ['.txt'],
       'application/json': ['.json'],
     },
@@ -39,10 +61,10 @@ export function FileUploader({ onFileUpload, isProcessing }: FileUploaderProps) 
   return (
     <div className="flex h-full items-center justify-center py-12">
       <Card 
-        className="w-full max-w-3xl text-center shadow-xl transition-all hover:shadow-2xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+        className="w-full max-w-3xl text-center shadow-xl transition-all hover:shadow-2xl border-border/30 bg-card/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
       >
         <CardHeader className="p-8">
-          <CardTitle className="text-4xl font-extrabold tracking-tight">Upload Your Customer Reviews</CardTitle>
+          <CardTitle className="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-primary via-primary/80 to-foreground text-transparent bg-clip-text">Upload Your Customer Reviews</CardTitle>
           <CardDescription className="text-lg text-muted-foreground pt-2">
             Turn raw feedback into actionable business intelligence with AI.
           </CardDescription>
@@ -51,7 +73,7 @@ export function FileUploader({ onFileUpload, isProcessing }: FileUploaderProps) 
           <div
             {...getRootProps()}
             className={`group cursor-pointer rounded-lg border-2 border-dashed p-12 transition-colors ${
-              isDragActive ? 'border-primary bg-primary/10' : 'border-border/50 bg-background hover:border-primary/50'
+              isDragActive ? 'border-primary bg-primary/10' : 'border-border/50 bg-background/50 hover:border-primary/50'
             }`}
           >
             <input {...getInputProps()} />
@@ -61,10 +83,10 @@ export function FileUploader({ onFileUpload, isProcessing }: FileUploaderProps) 
                 </div>
                 <div className="text-center">
                     <p className="text-lg font-semibold">
-                      {isDragActive ? 'Drop the file here...' : 'Drag and drop a file or click to select'}
+                      {isDragActive ? 'Drop the file here...' : 'Drag & drop a file or click below'}
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      Supported formats: Excel, CSV, PDF, Word, TXT, JSON
+                      Supported formats: TXT, CSV, JSON
                     </p>
                 </div>
                 <Button onClick={open} disabled={isProcessing} size="lg" className="mt-6">

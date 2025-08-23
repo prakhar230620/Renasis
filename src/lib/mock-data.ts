@@ -1,3 +1,4 @@
+// This file is no longer used for the primary application logic but is kept for reference or future testing purposes.
 export const mockReviews = [
   { id: 1, product: "Laptop Pro", user: "User A", date: "2024-07-20", text: "The battery life is amazing! Lasts all day without a problem." },
   { id: 2, product: "Laptop Pro", user: "User B", date: "2024-07-19", text: "It's a bit heavy for my taste, and the fan gets really loud under load." },

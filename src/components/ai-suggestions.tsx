@@ -12,7 +12,7 @@ export function AiSuggestions({ suggestions }: AiSuggestionsProps) {
         .filter(s => s.length > 0);
 
     return (
-        <Card className="bg-primary/5 border-primary/20 shadow-sm hover:shadow-md transition-shadow">
+        <Card className="bg-gradient-to-br from-primary/10 via-transparent to-transparent border-primary/20 shadow-lg hover:shadow-primary/20 transition-shadow">
             <CardHeader className="flex flex-row items-center gap-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                     <Lightbulb className="h-6 w-6 text-primary" />

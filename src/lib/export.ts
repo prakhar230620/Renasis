@@ -65,7 +65,7 @@ function getBaseName(fileName: string): string {
 }
 
 
-export function exportToCSV(reviews: Review[], fileName: string) {
+export function exportToCSV(reviews: Review[], fileName:string) {
   const csvContent = convertToCSV(reviews);
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   downloadFile(blob, `${getBaseName(fileName)}_analysis.csv`);

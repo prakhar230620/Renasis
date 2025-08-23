@@ -27,7 +27,7 @@ export function ReviewsTable({ reviews }: ReviewsTableProps) {
         <div className="rounded-md border">
             <Table>
                 <TableHeader>
-                    <TableRow>
+                    <TableRow className="hover:bg-card">
                         <TableHead className="w-[150px]">Product</TableHead>
                         <TableHead className="w-[120px]">User</TableHead>
                         <TableHead>Review Text</TableHead>
@@ -37,8 +37,8 @@ export function ReviewsTable({ reviews }: ReviewsTableProps) {
                 <TableBody>
                     {reviews.map((review) => (
                         <TableRow key={review.id}>
-                            <TableCell className="font-medium">{review.product}</TableCell>
-                            <TableCell>{review.user}</TableCell>
+                            <TableCell className="font-medium text-foreground/90">{review.product}</TableCell>
+                            <TableCell className="text-muted-foreground">{review.user}</TableCell>
                             <TableCell className="text-muted-foreground">{review.text}</TableCell>
                             <TableCell className="text-center">
                                 <Badge variant={getSentimentVariant(review.sentiment)} className="capitalize">

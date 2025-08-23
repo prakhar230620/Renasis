@@ -11,14 +11,10 @@ import {
   ChartLegendContent,
 } from '@/components/ui/chart';
 
-interface SentimentChartProps {
-  data: SentimentData[];
-}
-
 const chartConfig = {
-  positive: { label: 'Positive' },
-  negative: { label: 'Negative' },
-  neutral: { label: 'Neutral' },
+  positive: { label: 'Positive', color: 'hsl(var(--chart-3))' },
+  negative: { label: 'Negative', color: 'hsl(var(--chart-5))' },
+  neutral: { label: 'Neutral', color: 'hsl(var(--chart-4))' },
 };
 
 export function SentimentChart({ data }: SentimentChartProps) {
@@ -30,8 +26,11 @@ export function SentimentChart({ data }: SentimentChartProps) {
       >
         <PieChart>
           <ChartTooltip
-            cursor={false}
-            content={<ChartTooltipContent hideLabel />}
+            cursor={true}
+            content={<ChartTooltipContent 
+              className="bg-card/80 backdrop-blur-sm"
+              hideLabel 
+            />}
           />
           <Pie
             data={data}
@@ -39,10 +38,11 @@ export function SentimentChart({ data }: SentimentChartProps) {
             nameKey="name"
             innerRadius={60}
             strokeWidth={5}
+            stroke="hsl(var(--background))"
             labelLine={false}
           >
             {data.map((entry) => (
-              <Cell key={entry.name} fill={entry.color} className="focus:outline-none" />
+              <Cell key={entry.name} fill={entry.color} className="focus:outline-none focus:ring-2 focus:ring-primary/50" />
             ))}
           </Pie>
           <ChartLegend
