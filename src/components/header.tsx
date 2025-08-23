@@ -3,20 +3,20 @@ import React from 'react';
 
 const Logo = () => (
   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="16" cy="16" r="14" fill="url(#logo-gradient)" />
+    <path d="M16 0C7.163 0 0 7.163 0 16C0 24.837 7.163 32 16 32C24.837 32 32 24.837 32 16C32 7.163 24.837 0 16 0ZM23.681 21.244C23.844 21.063 23.85 20.813 23.694 20.631L20.444 16.844C21.631 15.481 22.144 13.569 21.688 11.669C21.231 9.769 19.869 8.281 18.075 7.631C16.281 6.981 14.319 7.269 12.756 8.369C11.194 9.469 10.25 11.231 10.25 13.125C10.25 15.319 11.269 17.281 12.831 18.456L9.119 22.844C8.962 23.025 8.956 23.275 9.112 23.456L10.369 24.881C10.519 25.056 10.769 25.069 10.931 24.906L14.631 21.3C15.069 21.494 15.538 21.631 16.031 21.713C16.519 21.788 17.013 21.806 17.5 21.769C19.656 21.612 21.588 20.531 22.813 18.819L26.219 22.844C26.375 23.025 26.625 23.031 26.781 22.869L28.031 21.619C28.188 21.45 28.181 21.2 28.031 21.025L23.681 21.244Z" fill="url(#paint0_linear_1_2)"/>
+    <path d="M18.5 14.5C18.5 15.88 17.38 17 16 17C14.62 17 13.5 15.88 13.5 14.5C13.5 13.12 14.62 12 16 12C17.38 12 18.5 13.12 18.5 14.5Z" fill="white"/>
     <defs>
-      <radialGradient id="logo-gradient" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(24.5) rotate(90) scale(22)">
-        <stop stopColor="#29ABE2"/>
-        <stop offset="1" stopColor="#0071BC"/>
-      </radialGradient>
+      <linearGradient id="paint0_linear_1_2" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#4F46E5"/>
+        <stop offset="1" stopColor="#818CF8"/>
+      </linearGradient>
     </defs>
-    <path d="M12.4,22.4 C11.2,22.4 10.1,22 9.2,21.1 C8.3,20.2 7.9,19.2 7.9,18 C7.9,16.8 8.3,15.8 9.2,14.9 C10.1,14 11.2,13.6 12.4,13.6 C13.3,13.6 14.1,13.8 14.8,14.2 C15.5,14.6 16.1,15.2 16.5,15.9 L14.5,16.8 C14.3,16.4 14,16.1 13.6,15.8 C13.2,15.6 12.8,15.5 12.3,15.5 C11.6,15.5 11,15.7 10.5,16.2 C10,16.7 9.8,17.3 9.8,18 C9.8,18.7 10,19.3 10.5,19.8 C11,20.3 11.6,20.5 12.3,20.5 C12.8,20.5 13.2,20.4 13.6,20.2 C14,20 14.3,19.7 14.5,19.3 L16.5,20.1 C16.1,20.8 15.5,21.4 14.8,21.8 C14.1,22.2 13.3,22.4 12.4,22.4 Z M17.4,22.1 L17.4,13.9 L19.2,13.9 L19.2,15.7 C19.6,15.1 20.1,14.6 20.7,14.2 C21.3,13.8 22,13.6 22.7,13.6 C23.8,13.6 24.7,14 25.4,14.8 C26.1,15.6 26.5,16.6 26.5,17.8 L26.5,22.1 L24.6,22.1 L24.6,18.1 C24.6,17.4 24.4,16.9 24.1,16.5 C23.8,16.1 23.3,15.9 22.7,15.9 C22,15.9 21.4,16.2 21,16.8 C20.6,17.4 20.4,18.1 20.4,18.9 L20.4,22.1 L17.4,22.1 Z" fill="white" />
   </svg>
 );
 
 export function AppHeader() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur-sm">
       <div className="container mx-auto flex h-16 items-center px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3">
           <Logo />
