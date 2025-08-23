@@ -80,25 +80,31 @@ export function Dashboard({ result, onReset }: DashboardProps) {
                 </div>
             </div>
 
-            <Card className="shadow-lg hover:shadow-primary/20 transition-shadow">
-                <CardHeader>
-                    <CardTitle>Sentiment Analysis</CardTitle>
-                    <CardDescription>Distribution of customer sentiment.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <SentimentChart data={result.sentimentDistribution} />
-                </CardContent>
-            </Card>
-
-            <Card className="shadow-lg hover:shadow-primary/20 transition-shadow">
-                <CardHeader>
-                    <CardTitle>Key Issues Identified</CardTitle>
-                    <CardDescription>Common topics mentioned in reviews.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <IssueTags issues={result.issues} />
-                </CardContent>
-            </Card>
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+                <div className="lg:col-span-1">
+                    <Card className="shadow-lg hover:shadow-primary/20 transition-shadow h-full">
+                        <CardHeader>
+                            <CardTitle>Sentiment Analysis</CardTitle>
+                            <CardDescription>Distribution of customer sentiment.</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <SentimentChart data={result.sentimentDistribution} />
+                        </CardContent>
+                    </Card>
+                </div>
+                <div className="lg:col-span-2">
+                    <Card className="shadow-lg hover:shadow-primary/20 transition-shadow h-full">
+                        <CardHeader>
+                            <CardTitle>Key Issues Identified</CardTitle>
+                            <CardDescription>Common topics mentioned in reviews.</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <IssueTags issues={result.issues} />
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
+            
 
             <AiSuggestions suggestions={result.suggestions} />
 
@@ -131,32 +137,37 @@ export const DashboardSkeleton = () => (
             </div>
         </div>
 
-        <Card>
-            <CardHeader>
-                <Skeleton className="h-6 w-40" />
-                <Skeleton className="mt-2 h-4 w-48" />
-            </CardHeader>
-            <CardContent className="flex h-[250px] items-center justify-center">
-                <Skeleton className="h-44 w-44 rounded-full" />
-            </CardContent>
-        </Card>
-
-        <Card>
-            <CardHeader>
-                 <Skeleton className="h-6 w-48" />
-                 <Skeleton className="mt-2 h-4 w-56" />
-            </CardHeader>
-            <CardContent className="h-[150px] space-y-3 pt-4">
-                 <div className="flex flex-wrap gap-3">
-                    <Skeleton className="h-8 w-24 rounded-full" />
-                    <Skeleton className="h-8 w-32 rounded-full" />
-                    <Skeleton className="h-8 w-20 rounded-full" />
-                    <Skeleton className="h-8 w-28 rounded-full" />
-                    <Skeleton className="h-8 w-36 rounded-full" />
-                    <Skeleton className="h-8 w-24 rounded-full" />
-                 </div>
-            </CardContent>
-        </Card>
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+             <div className="lg:col-span-1">
+                <Card>
+                    <CardHeader>
+                        <Skeleton className="h-6 w-40" />
+                        <Skeleton className="mt-2 h-4 w-48" />
+                    </CardHeader>
+                    <CardContent className="flex h-[250px] items-center justify-center">
+                        <Skeleton className="h-44 w-44 rounded-full" />
+                    </CardContent>
+                </Card>
+             </div>
+             <div className="lg:col-span-2">
+                 <Card>
+                    <CardHeader>
+                        <Skeleton className="h-6 w-48" />
+                        <Skeleton className="mt-2 h-4 w-56" />
+                    </CardHeader>
+                    <CardContent className="h-[250px] space-y-3 pt-4">
+                        <div className="flex flex-wrap gap-3">
+                            <Skeleton className="h-8 w-24 rounded-full" />
+                            <Skeleton className="h-8 w-32 rounded-full" />
+                            <Skeleton className="h-8 w-20 rounded-full" />
+                            <Skeleton className="h-8 w-28 rounded-full" />
+                            <Skeleton className="h-8 w-36 rounded-full" />
+                            <Skeleton className="h-8 w-24 rounded-full" />
+                        </div>
+                    </CardContent>
+                </Card>
+             </div>
+        </div>
 
          <Card>
             <CardHeader>

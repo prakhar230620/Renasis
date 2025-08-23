@@ -18,9 +18,13 @@ const GenerateBusinessSuggestionsInputSchema = z.object({
 });
 export type GenerateBusinessSuggestionsInput = z.infer<typeof GenerateBusinessSuggestionsInputSchema>;
 
+const SuggestionCategorySchema = z.object({
+  title: z.string().describe('The category title for a group of suggestions (e.g., "Product Quality & Design").'),
+  points: z.array(z.string()).describe('A list of specific, actionable suggestions within this category.'),
+});
+
 const GenerateBusinessSuggestionsOutputSchema = z.object({
-  suggestions:
-    z.string().describe('AI-generated suggestions for actionable business improvements.'),
+  suggestions: z.array(SuggestionCategorySchema).describe('A list of categorized, AI-generated suggestions for actionable business improvements.'),
 });
 export type GenerateBusinessSuggestionsOutput = z.infer<typeof GenerateBusinessSuggestionsOutputSchema>;
 
@@ -34,7 +38,11 @@ const prompt = ai.definePrompt({
   name: 'generateBusinessSuggestionsPrompt',
   input: {schema: GenerateBusinessSuggestionsInputSchema},
   output: {schema: GenerateBusinessSuggestionsOutputSchema},
-  prompt: `Based on the following analysis of customer reviews, provide actionable business improvements suggestions:\n\n  {{{reviewAnalysis}}}\n  `,
+  prompt: `Based on the following analysis of customer reviews, provide actionable business improvements suggestions. Group the suggestions into logical categories.
+
+  Analysis:
+  {{{reviewAnalysis}}}
+  `,
 });
 
 const generateBusinessSuggestionsFlow = ai.defineFlow(

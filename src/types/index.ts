@@ -14,10 +14,15 @@ export interface SentimentData {
   color: string;
 }
 
+export interface SuggestionCategory {
+  title: string;
+  points: string[];
+}
+
 export interface AnalysisResult {
   fileName: string;
   reviews: Review[];
   sentimentDistribution: SentimentData[];
   issues: string[];
-  suggestions: string;
+  suggestions: SuggestionCategory[];
 }

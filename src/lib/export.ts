@@ -1,4 +1,4 @@
-import type { AnalysisResult, Review } from '@/types';
+import type { AnalysisResult, Review, SuggestionCategory } from '@/types';
 import jsPDF from 'jspdf';
 
 function convertToCSV(data: Review[]): string {
@@ -20,6 +20,13 @@ function convertToCSV(data: Review[]): string {
   return csvRows.join('\n');
 }
 
+function formatSuggestions(suggestions: SuggestionCategory[]): string {
+    return suggestions.map(category => {
+        const points = category.points.map(p => `  - ${p}`).join('\n');
+        return `${category.title}:\n${points}`;
+    }).join('\n\n');
+}
+
 function generateTextContent(analysisResult: AnalysisResult): string {
   let content = `Analysis for: ${analysisResult.fileName}\n`;
   content += `Total Reviews: ${analysisResult.reviews.length}\n\n`;
@@ -37,7 +44,7 @@ function generateTextContent(analysisResult: AnalysisResult): string {
   content += '\n';
   
   content += '--- AI Suggestions ---\n';
-  content += `${analysisResult.suggestions}\n\n`;
+  content += `${formatSuggestions(analysisResult.suggestions)}\n\n`;
 
   content += '--- Processed Reviews ---\n';
   analysisResult.reviews.forEach(review => {

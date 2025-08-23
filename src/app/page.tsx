@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
-import type { AnalysisResult, Review, SentimentData } from '@/types';
+import type { AnalysisResult, Review, SentimentData, SuggestionCategory } from '@/types';
 import { analyzeCustomerSentiment } from '@/ai/flows/analyze-customer-sentiment';
 import { identifyCustomerIssues } from '@/ai/flows/identify-customer-issues';
 import { generateBusinessSuggestions } from '@/ai/flows/generate-business-suggestions';
@@ -32,10 +32,11 @@ export default function Home() {
     try {
       const reviewsToProcess = parseReviewsFromText(fileText);
       const allReviewText = reviewsToProcess.map(r => r.text);
+      const combinedReviewText = allReviewText.join('\n');
 
       const [issuesResult, suggestionsResult, sentimentResult] = await Promise.all([
-        identifyCustomerIssues({ reviews: allReviewText.join('\\n') }),
-        generateBusinessSuggestions({ reviewAnalysis: allReviewText.join('\\n') }),
+        identifyCustomerIssues({ reviews: combinedReviewText }),
+        generateBusinessSuggestions({ reviewAnalysis: combinedReviewText }),
         analyzeCustomerSentiment({ reviews: allReviewText }),
       ]);
 
