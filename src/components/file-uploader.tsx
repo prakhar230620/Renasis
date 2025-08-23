@@ -1,3 +1,4 @@
+
 'use client';
 
 import { UploadCloud, Loader2 } from 'lucide-react';
@@ -6,55 +7,54 @@ import { useDropzone, type FileWithPath } from 'react-dropzone';
 import { Button } from './ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Packer, Document } from 'docx';
-import { read, utils } from 'xlsx';
+import { parseFile } from '@/app/actions';
 
-
-async function readDocx(file: File): Promise<string> {
-  const arrayBuffer = await file.arrayBuffer();
-  try {
-    const doc = new Document();
-    const content = await doc.body.getSections()[0].getText();
-    return content;
-  } catch (e) {
-    console.error("Error reading docx file", e);
-    return "";
-  }
+interface FileUploaderProps {
+  onFileText: (fileName: string, fileText: string) => void;
+  isProcessing: boolean;
 }
-
 
 export function FileUploader({ onFileText, isProcessing }: FileUploaderProps) {
   const { toast } = useToast();
 
   const handleFile = async (file: File) => {
     const reader = new FileReader();
-    
-    if (file.name.endsWith('.docx')) {
-      try {
-        const text = await readDocx(file);
-        onFileText(file.name, text);
-      } catch (error) {
-        toast({
-          title: 'File Read Error',
-          description: 'Could not parse the DOCX file.',
-          variant: 'destructive',
-        });
-      }
-      return;
-    }
 
     reader.onload = async (e) => {
-      const text = e.target?.result;
-      if (typeof text === 'string') {
-        onFileText(file.name, text);
-      } else {
-         toast({
+      const buffer = e.target?.result as ArrayBuffer;
+      if (!buffer) {
+        toast({
           title: 'File Read Error',
-          description: 'Could not read the file content as text.',
+          description: 'Could not read file buffer.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      try {
+        const fileContent = Buffer.from(buffer).toString('base64');
+        const text = await parseFile(file.name, file.type, fileContent);
+        
+        if (text) {
+          onFileText(file.name, text);
+        } else {
+           toast({
+            title: 'File Read Error',
+            description: `Could not extract text from ${file.name}. It might be empty or corrupted.`,
+            variant: 'destructive',
+          });
+        }
+      } catch (error) {
+        console.error("Error parsing file", error);
+        const errorMessage = error instanceof Error ? error.message : `Could not parse ${file.name}.`;
+        toast({
+          title: 'File Parse Error',
+          description: errorMessage,
           variant: 'destructive',
         });
       }
     };
+    
     reader.onerror = () => {
       toast({
         title: 'File Read Error',
@@ -62,7 +62,8 @@ export function FileUploader({ onFileText, isProcessing }: FileUploaderProps) {
         variant: 'destructive',
       });
     };
-    reader.readAsText(file);
+
+    reader.readAsArrayBuffer(file);
   }
 
   const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
@@ -77,7 +78,7 @@ export function FileUploader({ onFileText, isProcessing }: FileUploaderProps) {
     accept: {
       'text/csv': ['.csv'],
       'text/plain': ['.txt'],
-      'application/json': ['.json'],
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
     },
     multiple: false,
@@ -112,7 +113,7 @@ export function FileUploader({ onFileText, isProcessing }: FileUploaderProps) {
                       {isDragActive ? 'Drop the file here...' : 'Drag & drop a file or click to select'}
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      Supported formats: TXT, CSV, JSON, DOCX
+                      Supported formats: TXT, CSV, XLSX, DOCX
                     </p>
                 </div>
                 <Button onClick={open} disabled={isProcessing} size="lg" className="mt-6" type="button">
