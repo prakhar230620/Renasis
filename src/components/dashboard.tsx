@@ -41,7 +41,7 @@ export function Dashboard({ result, onReset }: DashboardProps) {
         <div className="space-y-8 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0">
             <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                 <div className="flex items-center gap-4">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-card">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-card shadow-inner-shadow">
                         <FileText className="h-7 w-7 text-primary" />
                     </div>
                     <div>
