@@ -138,9 +138,9 @@ export function Dashboard({ result, onReset }: DashboardProps) {
 export const DashboardSkeleton = () => (
     <div className="space-y-8 animate-pulse">
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 min-w-0">
                 <Skeleton className="h-14 w-14 rounded-lg" />
-                <div>
+                <div className="min-w-0">
                     <Skeleton className="h-4 w-24 mb-2" />
                     <Skeleton className="h-7 w-64" />
                 </div>
