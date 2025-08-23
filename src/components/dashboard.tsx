@@ -116,10 +116,10 @@ export function Dashboard({ result, onReset }: DashboardProps) {
                             <CardTitle>Processed Reviews</CardTitle>
                             <CardDescription>A detailed view of each analyzed review.</CardDescription>
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
                             <span>Total: {result.reviews.length}</span>
-                            <span className="text-border">|</span>
-                            <div className="flex items-center gap-2">
+                            <span className="text-border hidden sm:inline">|</span>
+                            <div className="flex w-full items-center gap-2 sm:w-auto flex-wrap">
                                 <Badge variant="positive" className="text-xs">{sentimentSummary.positive || 0} Positive</Badge>
                                 <Badge variant="destructive" className="text-xs">{sentimentSummary.negative || 0} Negative</Badge>
                                 <Badge variant="secondary" className="text-xs">{sentimentSummary.neutral || 0} Neutral</Badge>

@@ -29,10 +29,10 @@ export function ReviewsTable({ reviews }: ReviewsTableProps) {
             <Table>
                 <TableHeader className="sticky top-0 bg-card z-10">
                     <TableRow className="hover:bg-muted/50">
-                        <TableHead className="w-[150px]">Product</TableHead>
-                        <TableHead className="w-[120px]">User</TableHead>
+                        <TableHead className="whitespace-nowrap">Product</TableHead>
+                        <TableHead className="whitespace-nowrap">User</TableHead>
                         <TableHead>Review Text</TableHead>
-                        <TableHead className="w-[150px] text-center">Sentiment</TableHead>
+                        <TableHead className="text-center whitespace-nowrap">Sentiment</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
