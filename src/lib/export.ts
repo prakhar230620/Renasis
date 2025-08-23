@@ -20,36 +20,61 @@ function convertToCSV(data: Review[]): string {
   return csvRows.join('\n');
 }
 
-function formatSuggestions(suggestions: SuggestionCategory[]): string {
+function formatSuggestionsForText(suggestions: SuggestionCategory[]): string {
     return suggestions.map(category => {
-        const points = category.points.map(p => `  - ${p}`).join('\n');
+        const points = category.points.map(p => `  • ${p}`).join('\n');
         return `${category.title}:\n${points}`;
     }).join('\n\n');
 }
 
 function generateTextContent(analysisResult: AnalysisResult): string {
-  let content = `Analysis for: ${analysisResult.fileName}\n`;
-  content += `Total Reviews: ${analysisResult.reviews.length}\n\n`;
+  const { fileName, reviews, sentimentDistribution, issues, suggestions } = analysisResult;
+  const totalReviews = reviews.length;
+  const sentimentCounts = sentimentDistribution.reduce((acc, curr) => {
+      acc[curr.name as 'positive' | 'negative' | 'neutral'] = curr.value;
+      return acc;
+  }, {} as Record<'positive' | 'negative' | 'neutral', number>);
 
-  content += '--- Sentiment Distribution ---\n';
-  analysisResult.sentimentDistribution.forEach(d => {
-    content += `${d.name}: ${d.value}\n`;
-  });
-  content += '\n';
+  let content = `==================================================\n`;
+  content += `    Analysis Report for: ${fileName}\n`;
+  content += `==================================================\n\n`;
 
-  content += '--- Key Issues Identified ---\n';
-  analysisResult.issues.forEach(issue => {
-    content += `- ${issue}\n`;
-  });
-  content += '\n';
+  content += `I. EXECUTIVE SUMMARY\n`;
+  content += `--------------------------------------------------\n`;
+  content += `Total Reviews Analyzed: ${totalReviews}\n`;
+  content += `\n`;
+  content += `Sentiment Overview:\n`;
+  content += `  - Positive: ${sentimentCounts.positive || 0} (${totalReviews > 0 ? ((sentimentCounts.positive || 0) / totalReviews * 100).toFixed(1) : 0}%)\n`;
+  content += `  - Negative: ${sentimentCounts.negative || 0} (${totalReviews > 0 ? ((sentimentCounts.negative || 0) / totalReviews * 100).toFixed(1) : 0}%)\n`;
+  content += `  - Neutral:  ${sentimentCounts.neutral || 0} (${totalReviews > 0 ? ((sentimentCounts.neutral || 0) / totalReviews * 100).toFixed(1) : 0}%)\n\n`;
   
-  content += '--- AI Suggestions ---\n';
-  content += `${formatSuggestions(analysisResult.suggestions)}\n\n`;
+  content += `\nII. KEY ISSUES IDENTIFIED\n`;
+  content += `--------------------------------------------------\n`;
+  if (issues.length > 0) {
+    issues.forEach(issue => {
+      content += `• ${issue}\n`;
+    });
+  } else {
+    content += `No specific issues were identified from the reviews.\n`;
+  }
+  content += `\n`;
 
-  content += '--- Processed Reviews ---\n';
-  analysisResult.reviews.forEach(review => {
-    content += `ID: ${review.id}, Product: ${review.product}, User: ${review.user}, Date: ${review.date}, Sentiment: ${review.sentiment}\n`;
-    content += `Review: ${review.text}\n\n`;
+  content += `\nIII. AI-POWERED SUGGESTIONS\n`;
+  content += `--------------------------------------------------\n`;
+  if (suggestions.length > 0) {
+    content += `${formatSuggestionsForText(suggestions)}\n\n`;
+  } else {
+    content += `No specific suggestions were generated.\n`;
+  }
+
+  content += `\nIV. DETAILED REVIEW DATA\n`;
+  content += `--------------------------------------------------\n`;
+  reviews.forEach(review => {
+    content += `Review ID: ${review.id}\n`;
+    content += `User:      ${review.user}\n`;
+    content += `Sentiment: ${review.sentiment} (Confidence: ${review.confidence.toFixed(2)})\n`;
+    content += `Text:      ${review.text}\n`;
+    content += `--------------------------------------------------\n`;
   });
 
   return content;
@@ -71,7 +96,6 @@ function getBaseName(fileName: string): string {
     return fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
 }
 
-
 export function exportToCSV(reviews: Review[], fileName:string) {
   const csvContent = convertToCSV(reviews);
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -90,26 +114,36 @@ export function exportToPDF(analysisResult: AnalysisResult, fileName: string) {
     const margin = 10;
     let y = 20;
 
+    const addText = (text: string, x: number, yPos: number, options?: any) => {
+        if (yPos > pageHeight - margin) {
+            doc.addPage();
+            y = margin;
+            return margin;
+        }
+        doc.text(text, x, yPos, options);
+        return yPos;
+    }
+    
     doc.setFontSize(18);
-    doc.text(`Analysis Report for ${analysisResult.fileName}`, margin, y);
-    y += 10;
-
+    y = addText(`Analysis Report`, doc.internal.pageSize.width / 2, y, { align: 'center' });
+    y += 8;
     doc.setFontSize(12);
+    y = addText(`Source File: ${analysisResult.fileName}`, doc.internal.pageSize.width / 2, y, { align: 'center' });
+    y += 15;
+
     const textContent = generateTextContent(analysisResult);
     const splitText = doc.splitTextToSize(textContent, doc.internal.pageSize.width - margin * 2);
     
     for (let i = 0; i < splitText.length; i++) {
-        if (y > pageHeight - margin) {
+        if (y > pageHeight - margin - 10) { // check for footer space
             doc.addPage();
             y = margin;
         }
-        doc.text(splitText[i], margin, y);
-        y += 7; // line height
+        y = addText(splitText[i], margin, y) + 6; // line height
     }
     
     doc.save(`${getBaseName(fileName)}_analysis.pdf`);
 }
-
 
 export function exportToTXT(analysisResult: AnalysisResult, fileName: string) {
     const textContent = generateTextContent(analysisResult);
