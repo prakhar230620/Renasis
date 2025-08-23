@@ -16,8 +16,8 @@ export function IssueTags({ issues }: IssueTagsProps) {
     return (
         <div className="flex flex-wrap gap-3 pt-2">
             {issues.map((issue, index) => (
-                <Badge key={index} variant="secondary" className="px-3 py-1.5 text-sm font-medium transition-all hover:bg-primary/20 hover:text-primary border-primary/10">
-                   <Tag className="mr-2 h-4 w-4"/>
+                <Badge key={index} variant="secondary" className="px-3 py-1.5 text-sm font-medium transition-all hover:bg-primary/20 hover:text-primary-foreground border-primary/10">
+                   <Tag className="mr-2 h-4 w-4 text-primary"/>
                     {issue}
                 </Badge>
             ))}
