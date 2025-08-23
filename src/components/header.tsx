@@ -3,16 +3,35 @@ import React from 'react';
 
 const Logo = () => (
   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M16 0C7.163 0 0 7.163 0 16C0 24.837 7.163 32 16 32C24.837 32 32 24.837 32 16C32 7.163 24.837 0 16 0ZM23.681 21.244C23.844 21.063 23.85 20.813 23.694 20.631L20.444 16.844C21.631 15.481 22.144 13.569 21.688 11.669C21.231 9.769 19.869 8.281 18.075 7.631C16.281 6.981 14.319 7.269 12.756 8.369C11.194 9.469 10.25 11.231 10.25 13.125C10.25 15.319 11.269 17.281 12.831 18.456L9.119 22.844C8.962 23.025 8.956 23.275 9.112 23.456L10.369 24.881C10.519 25.056 10.769 25.069 10.931 24.906L14.631 21.3C15.069 21.494 15.538 21.631 16.031 21.713C16.519 21.788 17.013 21.806 17.5 21.769C19.656 21.612 21.588 20.531 22.813 18.819L26.219 22.844C26.375 23.025 26.625 23.031 26.781 22.869L28.031 21.619C28.188 21.45 28.181 21.2 28.031 21.025L23.681 21.244Z" fill="url(#paint0_linear_1_2)"/>
-    <path d="M18.5 14.5C18.5 15.88 17.38 17 16 17C14.62 17 13.5 15.88 13.5 14.5C13.5 13.12 14.62 12 16 12C17.38 12 18.5 13.12 18.5 14.5Z" fill="white"/>
     <defs>
-      <linearGradient id="paint0_linear_1_2" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#4F46E5"/>
-        <stop offset="1" stopColor="#818CF8"/>
+      <linearGradient id="logoGradient" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#29ABE2" />
+        <stop offset="100%" stopColor="#1E88E5" />
       </linearGradient>
+      <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="1"/>
+        <feOffset dx="1" dy="1" result="offsetblur"/>
+        <feComponentTransfer>
+          <feFuncA type="linear" slope="0.3"/>
+        </feComponentTransfer>
+        <feMerge>
+          <feMergeNode/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
     </defs>
+    <g filter="url(#dropShadow)">
+      <circle cx="16" cy="16" r="15" fill="hsl(var(--card))" stroke="url(#logoGradient)" strokeWidth="2"/>
+      <path d="M13 18C13 15.7909 14.7909 14 17 14C19.2091 14 21 15.7909 21 18" stroke="url(#logoGradient)" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M10 22L11.5 20.5" stroke="url(#logoGradient)" strokeWidth="2" strokeLinecap="round"/>
+
+      <rect x="10" y="10" width="3" height="5" rx="1" fill="hsl(var(--primary))" />
+      <rect x="14" y="8" width="3" height="7" rx="1" fill="hsl(var(--primary))" />
+      <rect x="18" y="11" width="3" height="4" rx="1" fill="hsl(var(--primary))" />
+    </g>
   </svg>
 );
+
 
 export function AppHeader() {
   return (
