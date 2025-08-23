@@ -1,0 +1,12 @@
+{
+  "functions": {
+    "src/app/**/*.ts": {
+      "maxDuration": 30
+    }
+  },
+  "build": {
+    "env": {
+      "GENKIT_ENV": "production"
+    }
+  }
+}
