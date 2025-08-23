@@ -32,7 +32,7 @@ export function ReviewsTable({ reviews }: ReviewsTableProps) {
                         <TableHead className="whitespace-nowrap">Product</TableHead>
                         <TableHead className="whitespace-nowrap">User</TableHead>
                         <TableHead>Review Text</TableHead>
-                        <TableHead className="text-center whitespace-nowrap">Sentiment</TableHead>
+                        <TableHead className="text-center">Sentiment</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
