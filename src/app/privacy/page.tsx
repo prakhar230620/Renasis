@@ -1,6 +1,10 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 
 export default function PrivacyPage() {
     const [lastUpdated, setLastUpdated] = useState('');
@@ -48,7 +52,13 @@ export default function PrivacyPage() {
         <div className="bg-background">
             <div className="container mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
                 <div className="space-y-10">
-                    <div className="text-center">
+                    <div className="relative text-center">
+                        <Link href="/" passHref>
+                            <Button variant="outline" className="absolute left-0 top-1/2 -translate-y-1/2">
+                                <ArrowLeft className="mr-2" />
+                                Back to Home
+                            </Button>
+                        </Link>
                         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">Privacy Policy</h1>
                         {lastUpdated && <p className="mt-4 text-lg text-muted-foreground">Last updated: {lastUpdated}</p>}
                     </div>
