@@ -38,15 +38,15 @@ export function Dashboard({ result, onReset }: DashboardProps) {
     }
     
     return (
-        <div className="space-y-6">
+        <div className="space-y-8 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0">
             <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-                <div className="flex items-center gap-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                        <FileText className="h-6 w-6 text-primary" />
+                <div className="flex items-center gap-4">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-primary/10">
+                        <FileText className="h-7 w-7 text-primary" />
                     </div>
                     <div>
-                        <h2 className="text-2xl font-bold tracking-tight">Analysis for: {result.fileName}</h2>
-                        <p className="text-muted-foreground">{result.reviews.length} reviews analyzed</p>
+                        <p className="text-sm text-muted-foreground">Analysis Report</p>
+                        <h2 className="text-2xl font-bold tracking-tight">{result.fileName}</h2>
                     </div>
                 </div>
                 <div className="flex w-full shrink-0 gap-2 sm:w-auto">
@@ -80,8 +80,8 @@ export function Dashboard({ result, onReset }: DashboardProps) {
                 </div>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                <Card className="lg:col-span-1">
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <Card className="lg:col-span-1 shadow-sm hover:shadow-md transition-shadow">
                     <CardHeader>
                         <CardTitle>Sentiment Analysis</CardTitle>
                         <CardDescription>Distribution of customer sentiment.</CardDescription>
@@ -90,7 +90,7 @@ export function Dashboard({ result, onReset }: DashboardProps) {
                         <SentimentChart data={result.sentimentDistribution} />
                     </CardContent>
                 </Card>
-                <Card className="lg:col-span-2">
+                <Card className="lg:col-span-2 shadow-sm hover:shadow-md transition-shadow">
                     <CardHeader>
                         <CardTitle>Key Issues Identified</CardTitle>
                         <CardDescription>Common topics mentioned in reviews.</CardDescription>
@@ -103,7 +103,7 @@ export function Dashboard({ result, onReset }: DashboardProps) {
 
             <AiSuggestions suggestions={result.suggestions} />
 
-            <Card>
+            <Card className="shadow-sm hover:shadow-md transition-shadow">
                 <CardHeader>
                     <CardTitle>Processed Reviews</CardTitle>
                     <CardDescription>A detailed view of each analyzed review.</CardDescription>
@@ -117,29 +117,29 @@ export function Dashboard({ result, onReset }: DashboardProps) {
 }
 
 export const DashboardSkeleton = () => (
-    <div className="space-y-6 animate-pulse">
+    <div className="space-y-8 animate-pulse">
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-            <div className="flex items-center gap-3">
-                <Skeleton className="h-12 w-12 rounded-lg" />
+            <div className="flex items-center gap-4">
+                <Skeleton className="h-14 w-14 rounded-lg" />
                 <div>
-                    <Skeleton className="mb-2 h-7 w-64" />
-                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-4 w-24 mb-2" />
+                    <Skeleton className="h-7 w-64" />
                 </div>
             </div>
             <div className="flex w-full shrink-0 gap-2 sm:w-auto">
-                 <Skeleton className="h-10 w-1/2 sm:w-44" />
-                 <Skeleton className="h-10 w-1/2 sm:w-28" />
+                 <Skeleton className="h-10 w-1/2 sm:w-44 rounded-md" />
+                 <Skeleton className="h-10 w-1/2 sm:w-32 rounded-md" />
             </div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             <Card className="lg:col-span-1">
                 <CardHeader>
                     <Skeleton className="h-6 w-40" />
                     <Skeleton className="mt-2 h-4 w-48" />
                 </CardHeader>
                 <CardContent className="flex h-[250px] items-center justify-center">
-                    <Skeleton className="h-40 w-40 rounded-full" />
+                    <Skeleton className="h-44 w-44 rounded-full" />
                 </CardContent>
             </Card>
             <Card className="lg:col-span-2">
@@ -148,12 +148,13 @@ export const DashboardSkeleton = () => (
                      <Skeleton className="mt-2 h-4 w-56" />
                 </CardHeader>
                 <CardContent className="h-[250px] space-y-3 pt-4">
-                     <div className="flex flex-wrap gap-2">
+                     <div className="flex flex-wrap gap-3">
                         <Skeleton className="h-8 w-24 rounded-full" />
                         <Skeleton className="h-8 w-32 rounded-full" />
                         <Skeleton className="h-8 w-20 rounded-full" />
                         <Skeleton className="h-8 w-28 rounded-full" />
                         <Skeleton className="h-8 w-36 rounded-full" />
+                        <Skeleton className="h-8 w-24 rounded-full" />
                      </div>
                 </CardContent>
             </Card>
@@ -164,8 +165,9 @@ export const DashboardSkeleton = () => (
                 <Skeleton className="mt-2 h-4 w-64" />
             </CardHeader>
             <CardContent className="space-y-4 pt-4">
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-[90%]" />
+                <Skeleton className="h-5 w-full rounded" />
+                <Skeleton className="h-5 w-[90%] rounded" />
+                <Skeleton className="h-5 w-[95%] rounded" />
             </CardContent>
         </Card>
         <Card>
@@ -174,7 +176,7 @@ export const DashboardSkeleton = () => (
                  <Skeleton className="mt-2 h-4 w-56" />
             </CardHeader>
             <CardContent>
-                <Skeleton className="h-40 w-full" />
+                <Skeleton className="h-48 w-full rounded-md" />
             </CardContent>
         </Card>
     </div>

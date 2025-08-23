@@ -12,7 +12,7 @@ export function AiSuggestions({ suggestions }: AiSuggestionsProps) {
         .filter(s => s.length > 0);
 
     return (
-        <Card className="bg-primary/5 border-primary/20">
+        <Card className="bg-primary/5 border-primary/20 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center gap-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                     <Lightbulb className="h-6 w-6 text-primary" />
@@ -23,9 +23,12 @@ export function AiSuggestions({ suggestions }: AiSuggestionsProps) {
                 </div>
             </CardHeader>
             <CardContent>
-                <ul className="list-disc space-y-2 pl-5">
+                <ul className="space-y-3 pl-5">
                     {suggestionPoints.map((point, index) => (
-                        <li key={index} className="text-sm leading-relaxed">{point}</li>
+                        <li key={index} className="relative pl-4 text-base leading-relaxed">
+                            <span className="absolute left-0 top-1.5 h-1.5 w-1.5 rounded-full bg-primary/70"></span>
+                            {point}
+                        </li>
                     ))}
                 </ul>
             </CardContent>

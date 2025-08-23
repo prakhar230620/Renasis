@@ -38,31 +38,44 @@ export function FileUploader({ onFileUpload, isProcessing }: FileUploaderProps) 
 
   return (
     <div className="flex h-full items-center justify-center py-12">
-      <Card className="w-full max-w-3xl text-center shadow-lg">
-        <CardHeader>
-          <CardTitle className="text-3xl font-bold tracking-tight">Upload Your Reviews</CardTitle>
-          <CardDescription className="text-md text-muted-foreground">
-            Analyze customer feedback in seconds.
+      <Card 
+        className="w-full max-w-3xl text-center shadow-xl transition-all hover:shadow-2xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+      >
+        <CardHeader className="p-8">
+          <CardTitle className="text-4xl font-extrabold tracking-tight">Upload Your Customer Reviews</CardTitle>
+          <CardDescription className="text-lg text-muted-foreground pt-2">
+            Turn raw feedback into actionable business intelligence with AI.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-8 pb-8">
           <div
             {...getRootProps()}
-            className={`cursor-pointer rounded-lg border-2 border-dashed p-12 transition-colors ${
-              isDragActive ? 'border-primary bg-primary/10' : 'border-border hover:border-primary/50'
+            className={`group cursor-pointer rounded-lg border-2 border-dashed p-12 transition-colors ${
+              isDragActive ? 'border-primary bg-primary/10' : 'border-border/50 bg-background hover:border-primary/50'
             }`}
           >
             <input {...getInputProps()} />
-            <div className="flex h-48 flex-col items-center justify-center">
-                <UploadCloud className="mb-4 h-12 w-12 text-muted-foreground" />
-                <p className="text-lg font-semibold">
-                  {isDragActive ? 'Drop the file here...' : 'Drag & drop a file or click below'}
-                </p>
-                <p className="mt-2 text-muted-foreground">
-                  Supported formats: Excel, CSV, PDF, Word, TXT, JSON
-                </p>
-                <Button onClick={open} disabled={isProcessing} className="mt-6">
-                  Select File
+            <div className="flex h-48 flex-col items-center justify-center space-y-4">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-secondary transition-colors group-hover:bg-primary/10">
+                    <UploadCloud className="h-8 w-8 text-muted-foreground transition-colors group-hover:text-primary" />
+                </div>
+                <div className="text-center">
+                    <p className="text-lg font-semibold">
+                      {isDragActive ? 'Drop the file here...' : 'Drag and drop a file or click to select'}
+                    </p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Supported formats: Excel, CSV, PDF, Word, TXT, JSON
+                    </p>
+                </div>
+                <Button onClick={open} disabled={isProcessing} size="lg" className="mt-6">
+                    {isProcessing ? (
+                        <>
+                            <Loader2 className="mr-2 animate-spin" />
+                            Processing...
+                        </>
+                    ) : (
+                        'Select File'
+                    )}
                 </Button>
             </div>
           </div>
