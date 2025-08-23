@@ -86,17 +86,30 @@ export function exportToJSON(analysisResult: AnalysisResult, fileName: string) {
 
 export function exportToPDF(analysisResult: AnalysisResult, fileName: string) {
     const doc = new jsPDF();
-    const textContent = generateTextContent(analysisResult);
-    
+    const pageHeight = doc.internal.pageSize.height;
+    const margin = 10;
+    let y = 20;
+
     doc.setFontSize(18);
-    doc.text(`Analysis Report for ${analysisResult.fileName}`, 10, 20);
-    
+    doc.text(`Analysis Report for ${analysisResult.fileName}`, margin, y);
+    y += 10;
+
     doc.setFontSize(12);
-    const splitText = doc.splitTextToSize(textContent, 180);
-    doc.text(splitText, 10, 30);
+    const textContent = generateTextContent(analysisResult);
+    const splitText = doc.splitTextToSize(textContent, doc.internal.pageSize.width - margin * 2);
+    
+    for (let i = 0; i < splitText.length; i++) {
+        if (y > pageHeight - margin) {
+            doc.addPage();
+            y = margin;
+        }
+        doc.text(splitText[i], margin, y);
+        y += 7; // line height
+    }
     
     doc.save(`${getBaseName(fileName)}_analysis.pdf`);
 }
+
 
 export function exportToTXT(analysisResult: AnalysisResult, fileName: string) {
     const textContent = generateTextContent(analysisResult);
