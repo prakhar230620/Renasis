@@ -1,12 +1,13 @@
 {
   "functions": {
-    "src/app/**/*.ts": {
-      "maxDuration": 30
+    "src/app/api/**/*.ts": {
+      "maxDuration": 60
     }
   },
   "build": {
     "env": {
       "GENKIT_ENV": "production"
     }
-  }
+  },
+  "regions": ["iad1"]
 }

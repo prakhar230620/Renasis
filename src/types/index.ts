@@ -25,4 +25,9 @@ export interface AnalysisResult {
   sentimentDistribution: SentimentData[];
   issues: string[];
   suggestions: SuggestionCategory[];
+  sentiment: Array<{
+    reviewText: string;
+    sentiment: 'positive' | 'negative' | 'neutral';
+    confidence: number;
+  }>;
 }

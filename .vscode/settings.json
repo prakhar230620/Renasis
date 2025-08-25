@@ -1,0 +1,17 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["package.json"],
+      "url": "https://json.schemastore.org/package.json"
+    }
+  ],
+  "typescript.preferences.includePackageJsonAutoImports": "auto",
+  "eslint.workingDirectories": ["."],
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/.genkit": true
+  }
+}

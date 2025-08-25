@@ -24,19 +24,19 @@ export default function PrivacyPage() {
         },
         {
             title: "3. Information You Provide",
-            content: "You may upload files containing customer reviews. This data is processed in-memory for analysis during your active session. We do not save, store, or share the content of your uploaded files on our servers after your session is terminated. The analysis is performed by third-party AI services (e.g., Google Gemini), and the data is subject to their respective privacy policies."
+            content: "You may upload files containing customer reviews and provide your own Google AI API keys. Review data is processed in-memory for analysis during your active session and is never saved on our servers. Your API keys are stored locally on your device using browser storage and are never transmitted to or stored on our servers. The analysis is performed using your own Google AI API keys directly with Google's services."
         },
         {
             title: "4. How We Use Information",
-            content: "The content of the files you upload is used solely to provide you with the AI-driven analytics that are part of the Service. The data is sent to our AI partners for processing and is not used for any other purpose."
+            content: "The content of the files you upload is used solely to provide you with AI-driven analytics. Your data is processed using your own Google AI API keys, ensuring you maintain full control over your data. We do not store, access, or use your data for any other purpose beyond the immediate analysis session."
         },
         {
             title: "5. Data Security",
-            content: "We implement reasonable security measures to protect the data during your session. However, no method of transmission over the Internet or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your data, we cannot guarantee its absolute security."
+            content: "Your API keys are stored securely in your browser's local storage and never leave your device except when used to make direct API calls to Google's services. Review data is processed in-memory only during your session. We implement reasonable security measures, but no method of transmission is 100% secure. You maintain full control over your API keys and can remove them at any time."
         },
         {
             title: "6. Third-Party Services",
-            content: "Our Service uses third-party AI providers to perform analysis. We recommend you review the privacy policies of these providers to understand how they handle data."
+            content: "Our Service connects directly to Google AI services using your provided API keys. When you use the service, your review data is sent directly from your browser to Google's servers for processing. We recommend reviewing Google's privacy policy to understand how they handle your data during processing."
         },
         {
             title: "7. Changes to This Privacy Policy",

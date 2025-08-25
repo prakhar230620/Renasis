@@ -1,16 +1,20 @@
-
 {
-  "name": "nextn",
-  "version": "0.1.0",
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "renasis",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack -p 9002 --hostname 0.0.0.0",
+    "dev": "next dev",
     "genkit:dev": "genkit start -- tsx src/ai/dev.ts",
     "genkit:watch": "genkit start -- tsx --watch src/ai/dev.ts",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   },
   "dependencies": {
     "@genkit-ai/googleai": "^1.14.1",
@@ -61,10 +65,14 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.28.3",
+    "@babel/plugin-transform-runtime": "^7.28.3",
+    "@babel/preset-env": "^7.28.3",
     "@types/jspdf": "^2.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "babel-loader": "^10.0.0",
     "genkit-cli": "^1.14.1",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
